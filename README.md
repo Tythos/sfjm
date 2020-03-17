@@ -20,15 +20,15 @@ You should attach meta-properties to the conclusion of your module definition.
 At minimum, this should include values for the following keys, assigned to your
 *module.exports* Object:
 
-* __uni__, a string representing a universal namespace identifier
+* \_\_uni__, a string representing a universal namespace identifier
   (period-delimited namespace hierarchy, starting from TLD down to a unique
   identifier for your module).
 
-* __semver__, a string representing a Semantic Versioning number for your
+* \_\_semver__, a string representing a Semantic Versioning number for your
   current module version. This includes three decimal-delimited integers for
   major, minor, and patch revision numbers.
 
-* __author__, a string indicating the email address to which inquiries should
+* \_\_author__, a string indicating the email address to which inquiries should
   be made by users and developers.
 
 ## Building A Module

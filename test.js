@@ -2,7 +2,7 @@
 */
 
 if (typeof(define) != "function") { var define = require("./index.js").define.bind(arguments[0]); } // local build
-//if (typeof(define) != "function") { var define = require9"sfjm").define.bind(exports); } // standard clause
+//if (typeof(define) != "function") { var define = require("sfjm").define.bind(exports); } // standard clause
 define(function(require, exports, module) {
     exports.square = function(a) { return a * a; };
 

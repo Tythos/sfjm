@@ -10,8 +10,10 @@ module.exports.define = function(closure) {
 module.exports.build = function(target) {
 	let uglifyJs = require("uglify-js");
 	let fs = require("fs");
-	let src = fs.readFileSync(target, "utf8");
-	let mod = require(target);
+	let path = require("path");
+	let tgt = path.resolve(target);
+	let src = fs.readFileSync(tgt, "utf8");
+	let mod = require(tgt);
 	let min = uglifyJs.minify(src).code;
 	let out = `${mod.__uni__}-v${mod.__semver__}.min.js`;
 	fs.writeFileSync("./" + out, min);
@@ -33,7 +35,7 @@ module.exports.main = function(argv) {
 
 Object.assign(module.exports, {
 	"__uni__": "com.github.tythos.sfjm",
-	"__semver__": "1.0.0",
+	"__semver__": "1.1.1",
 	"__author__": "code@tythos.net"
 });
 
