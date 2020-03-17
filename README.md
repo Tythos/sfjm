@@ -1,10 +1,8 @@
-sfjm
-====
+# sfjm
 
 Development tool for supporting single-file JavaScript modules across use cases
 
-Usage
------
+## Usage
 
 Write your modules using an AMD-compatible "define()" closure. That function
 can be conditionally imported and scoped from the "sfjm" package, like so:
@@ -13,3 +11,4 @@ can be conditionally imported and scoped from the "sfjm" package, like so:
   define(function(require, exports, module) {
     ... // insert your usual AMD module content here
   });
+
