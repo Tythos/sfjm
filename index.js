@@ -4,10 +4,14 @@
 Object.assign(module.exports, {
 	"define": function(closure) {
 		let module = { "exports": {} };
-		Object.assign(module.exports, closure(require, module, module.exports));
+		Object.assign(module.exports, closure(require, module.exports, module));
 		Object.assign(this, module.exports);
+		console.log(module.exports);
 	},
-	"__uni__": "com.github.tythos.sfjsm",
+	"build": function() {
+		
+	},
+	"__uni__": "com.github.tythos.sfjm",
 	"__semver__": "1.0.0",
 	"__author__": "code@tythos.net"
 });

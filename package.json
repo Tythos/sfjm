@@ -4,7 +4,8 @@
   "description": "Development tool for supporting single-file JavaScript modules across use cases",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "uglifyjs --compress --mangle --output=index.min.js index.js",
+    "test": "uglifyjs --compress --mangle --output=test.min.js test.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Tythos/sfjm/issues"
   },
-  "homepage": "https://github.com/Tythos/sfjm"
+  "homepage": "https://github.com/Tythos/sfjm",
+  "devDependencies": {
+    "uglify-js": "^3.8.0"
+  }
 }
