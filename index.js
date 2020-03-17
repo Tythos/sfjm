@@ -35,7 +35,7 @@ module.exports.main = function(argv) {
 
 Object.assign(module.exports, {
 	"__uni__": "com.github.tythos.sfjm",
-	"__semver__": "1.1.1",
+	"__semver__": "1.1.2",
 	"__author__": "code@tythos.net"
 });
 
