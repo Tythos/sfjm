@@ -17,7 +17,7 @@
     "url": "https://github.com/Tythos/sfjm/issues"
   },
   "homepage": "https://github.com/Tythos/sfjm",
-  "devDependencies": {
+  "dependencies": {
     "tap": "^14.10.6",
     "uglify-js": "^3.8.0"
   },
