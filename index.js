@@ -4,6 +4,8 @@
    single-file JavaScript modules.
 */
 
+var SEMVER = "1.2.2";
+
 module.exports.define = function(closure) {
 	var module = { "exports": {} };
 	Object.assign(module.exports, closure(require, module.exports, module));
@@ -17,23 +19,16 @@ module.exports.build = function(target="./index.js") {
 	var tgt = path.resolve(target);
 	var src = fs.readFileSync(tgt, "utf8");
 	var mod = require(tgt);
-	var min = uglifyJs.minify(src).code;
+	var result = uglifyJs.minify(src);
+	if (result.error) {
+		result.error.filename = tgt;
+		console.error("Failed to build " + target, result.error);
+		return;
+	}
+	var min = result.code;
 	var out = mod.__uni__ + "-v" + mod.__semver__ + ".min.js";
 	fs.writeFileSync(path.resolve("./" + out), min);
 	console.log("Successfully built " + out);
-};
-
-module.exports.help = function() {
-	/* Prints documentation for individual command-line actions
-	*/
-	console.log("Command-line actions for SFJM:");
-	console.log("\tbuild\tUglifies/mangles target SFJM file to a UNI+SemVer file");
-	console.log("\ttest\tRuns the unit tests defined under a SFJM file's __verify__ property");
-	console.log("\tdeploy\tIncrements SemVer, commits/pushes Git, and publishes NPM package");
-	console.log("\t  --major\tSpecifies major version SemVer increment for deployment");
-	console.log("\t  --minor\tSpecifies minor version SemVer increment for deployment");
-	console.log("\t  --patch\tSpecifies patch version SemVer increment for deployment");
-	console.log("\thelp\tPrints this set of documentation for command-line actions");
 };
 
 module.exports.test = function(target="./index.js") {
@@ -55,10 +50,45 @@ module.exports.test = function(target="./index.js") {
 	});
 };
 
-module.exports.deploy = function() {
+module.exports.deploy = function(target="./index.js") {
 	/* 
 	*/
-	console.error("Not yet implemented");
+	var path = require("path");
+	var child_process = require("child_process");
+	var fs = require("fs");
+	var tgt = path.resolve(target);
+	var mod = require(tgt);
+	var cwd = path.dirname(tgt);
+
+	// git add, commit, tag, push
+	var msg = "auto-commit for v" + mod.__semver__;
+	[
+		"git add -A",
+		"git commit -m \"" + msg + "\"",
+		"git tag v" + mod.__semver__,
+		"git push",
+		"git push --tags"
+	].forEach(function(cmd) { child_process.execSync(cmd, { "cwd": cwd })});
+
+	// node publish (including temporary package.json)
+	var package = {};
+	package["name"] = mod.__uni__;
+	package["version"] = mod.__semver__;
+	package["dependencies"] = { "sfjm": "^" + SEMVER };
+	var packPath = cwd + "/package.json";
+	fs.writeFileSync(packPath, JSON.stringify(package));
+	child_process.execSync("npm publish", { "cwd": cwd });
+	//fs.unlink(cwd + "/package.json");
+};
+
+module.exports.help = function() {
+	/* Prints documentation for individual command-line actions
+	*/
+	console.log("Command-line actions for SFJM:");
+	console.log("\tbuild\tUglifies/mangles target SFJM file to a UNI+SemVer file");
+	console.log("\ttest\tRuns the unit tests defined under a SFJM file's __verify__ property");
+	console.log("\tdeploy\tIncrements SemVer, commits/pushes Git, and publishes NPM package");
+	console.log("\thelp\tPrints this set of documentation for command-line actions");
 };
 
 module.exports.main = function(argv) {
@@ -84,7 +114,7 @@ module.exports.main = function(argv) {
 
 Object.assign(module.exports, {
 	"__uni__": "com.github.tythos.sfjm",
-	"__semver__": "1.2.1",
+	"__semver__": SEMVER,
 	"__author__": "code@tythos.net",
 	"__verify__": []
 });

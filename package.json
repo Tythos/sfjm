@@ -1,6 +1,6 @@
 {
   "name": "sfjm",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Development tool for supporting single-file JavaScript modules across use cases",
   "main": "index.js",
   "scripts": {
