@@ -1,11 +1,11 @@
 {
   "name": "sfjm",
-  "version": "1.1.2",
+  "version": "1.2.1",
   "description": "Development tool for supporting single-file JavaScript modules across use cases",
   "main": "index.js",
   "scripts": {
     "build": "uglifyjs --compress --mangle --output=index.min.js index.js",
-    "test": "uglifyjs --compress --mangle --output=test.min.js test.js"
+    "test": "tap"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,11 @@
     "url": "https://github.com/Tythos/sfjm/issues"
   },
   "homepage": "https://github.com/Tythos/sfjm",
-  "dependencies": {
+  "devDependencies": {
+    "tap": "^14.10.6",
     "uglify-js": "^3.8.0"
+  },
+  "bin": {
+    "sfjm": "./index.js"
   }
 }
