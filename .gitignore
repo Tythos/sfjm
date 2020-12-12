@@ -1,6 +1,8 @@
 .nyc_output/
 .vscode/
+out/
 node_modules/
 *.swp
 *-lock.json
 *.min.js
+*.ver
