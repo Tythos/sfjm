@@ -32,12 +32,17 @@ out/
 *-error.log
 `.trim();
 
-const CWD  = process.cwd();
+const CWD  = process.cwd(); // this is the path to the target package, not SFJM
 
-const MODFILE = `${CWD}/index.js`;
+const MODFILE = `${CWD}/index.js`; // this is the path to the PACKAGE's index.js, not SFJM
+
+const SFJMPATH = module.path; // this is the path to SFJM (this file's folder)
 
 const ACTIONS = {
-    "init": () => {
+    "--help": () => {
+        let help = fs.readFileSync(SFJMPATH + "/HELP.rst", "utf8");
+        console.log(help);
+    }, "init": () => {
         const gitignorePath = `${CWD}/.gitignore`;
         fs.writeFileSync(MODFILE, INDEX);
         fs.writeFileSync(gitignorePath, GITIGNORE, () => {});
